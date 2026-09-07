@@ -1,6 +1,24 @@
 return function()
     local keybinds = require("hook.keybind").hooks
     local textobjectsmaps = keybinds.treesitter_textobjects()
+    -- table.insert(vim.g.markdown_fenced_languages or {}, "runic")
+    -- table.insert(vim.g.markdown_fenced_languages or {}, "zig")
+    vim.api.nvim_create_autocmd('User', {
+        pattern = 'TSUpdate',
+        callback = function()
+            require('nvim-treesitter.parsers').c3 = {
+                install_info = {
+                    url = "https://github.com/c3lang/tree-sitter-c3",
+                    files = { "src/parser.c", "src/scanner.c" },
+                    branch = "main",
+                },
+                sync_install = false, -- Set to true if you want to install synchronously
+                auto_install = true,  -- Automatically install when opening a file
+                filetype = "c3",      -- if filetype does not match the parser name
+            }
+        end
+    })
+    vim.treesitter.language.register('c3', { 'c3' })
     require('nvim-treesitter.configs').setup({
         modules = {},
         ensure_installed = { "http", "json" },

@@ -10,16 +10,16 @@ return {
         -- @init_all
         try_setup(require("init_all.version_check"))
         try_setup(require("init_all.init_keybindings"))
+        try_setup(require("init_all.init_vim"))
         try_setup(require("init_all.init_lazy"))
         try_setup(require("colors_src"))
-        try_setup(require("init_all.init_vim"))
         try_setup(require("init_all.init_remoteplugins"))
         try_setup(require("daily-todos"))
         try_setup(require("short-context-switch"))
         try_setup(require("pms"))
         try_setup(require("twitch"))
-        try_setup(require("newb"))
-        try_setup(require("ai"))
+        -- try_setup(require("newb"))
+        -- try_setup(require("ai"))
 
         --try_setup(require("dashboard"))
 
@@ -28,6 +28,7 @@ return {
             callback = function()
                 vim.fn.timer_start(100, function()
                     vim.cmd [[doautocmd User InitAllDone]]
+                    pcall(vim.cmd, "source session.vim")
                 end)
             end
         })

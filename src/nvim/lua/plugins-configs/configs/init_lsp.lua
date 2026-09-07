@@ -185,23 +185,30 @@ return function()
     end);
 
     local configs = require 'lspconfig.configs'
-    local runic_cmd = '/home/lumorsunil/repos/runic/zig-out/bin/runic-lsp'
 
     -- Check if the config is already defined (useful when reloading this file)
     if not configs.runic_lsp then
         configs.runic_lsp = {
             default_config = {
-                cmd = { runic_cmd },
+                cmd = { "runic-lsp" },
                 cmd_env = { RUNIC_LSP_LOG = 1 },
                 filetypes = { 'runic' },
                 root_dir = function(fname)
-                    return vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1]);
+                    local git_root = vim.fs.find('.git', { path = fname, upward = true })[1]
+
+                    if (git_root) then
+                        return vim.fs.dirname(git_root)
+                    end
+
+                    return vim.fn.trim(vim.fn.system("pwd"));
                 end,
-                settings = {},
             },
         }
     end
     setup_lsp_loader(group, { "runic" }, function()
         lspconfig.runic_lsp.setup(default_opts)
+    end)
+    setup_lsp_loader(group, { "haskell" }, function()
+        lspconfig.hls.setup(default_opts)
     end)
 end

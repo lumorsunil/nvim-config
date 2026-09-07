@@ -211,9 +211,11 @@ function keybind_table.dap()
     local widgets = require("dap.ui.widgets")
 
     nmap({
+        ["<F5>"] = mkbind("<cmd>DapContinue<cr>", "Debug: Continue"),
         ["<F10>"] = mkbind("<cmd>DapStepOver<cr>", "Debug: Step Over"),
         ["<F11>"] = mkbind("<cmd>DapStepInto<cr>", "Debug: Step Into"),
         ["<F12>"] = mkbind("<cmd>DapStepOut<cr>", "Debug: Step Out"),
+        ["<leader>b"] = mkbind("<cmd>DapToggleBreakpoint<cr>", "Debug: Step Out"),
         ["K"] = mkbind(
             function()
                 if (dap.session()) then
@@ -222,6 +224,16 @@ function keybind_table.dap()
             end,
             "Show hover info"),
     })
+end
+
+function keybind_table.dap_reset()
+    pcall(vim.keymap.del, "n", "<F5>")
+    pcall(vim.keymap.del, "n", "<F10>")
+    pcall(vim.keymap.del, "n", "<F11>")
+    pcall(vim.keymap.del, "n", "<F12>")
+    pcall(vim.keymap.del, "n", "<leader>b")
+    pcall(vim.keymap.del, "n", "K")
+    pcall(vim.cmd, "source session.vim")
 end
 
 -- @rest.keybind

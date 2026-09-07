@@ -59,7 +59,7 @@ local lazy_specs = {
         },
     },
     smart_open = {
-        enabled = true,
+        enabled = false,
         "danielfalk/smart-open.nvim",
         lazy = false,
         priority = 999,
@@ -76,6 +76,7 @@ local lazy_specs = {
     fzf = {
         enabled = true,
         "nvim-telescope/telescope-fzf-native.nvim",
+        event = "User InitAllDone",
         lazy = false,
         priority = 999,
         build = 'make'
@@ -114,6 +115,7 @@ local lazy_specs = {
         enabled = true,
         "nvim-telescope/telescope.nvim",
         lazy = false,
+        -- event = "User InitAllDone",
         priority = 999,
         tag = '0.1.5',
         dependencies = {
@@ -416,20 +418,20 @@ local lazy_specs = {
         "Mofiqul/vscode.nvim",
         ft = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
     },
-    go = {
-        enabled = true,
-        "ray-x/go.nvim",
-        dependencies = { -- optional packages
-            "neovim/nvim-lspconfig",
-            "nvim-treesitter/nvim-treesitter",
-        },
-        config = function()
-            require("go").setup()
-        end,
-        event = "User InitAllDone",
-        ft = { "go", 'gomod' },
-        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
-    },
+    -- go = {
+    --     enabled = true,
+    --     "ray-x/go.nvim",
+    --     dependencies = { -- optional packages
+    --         "neovim/nvim-lspconfig",
+    --         "nvim-treesitter/nvim-treesitter",
+    --     },
+    --     config = function()
+    --         require("go").setup()
+    --     end,
+    --     event = "User InitAllDone",
+    --     ft = { "go", 'gomod' },
+    --     build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+    -- },
     overseer = {
         enabled = true,
         "stevearc/overseer.nvim",
@@ -457,6 +459,33 @@ local lazy_specs = {
         config = function(_, opts)
             require("runic_highlight").setup(opts)
         end,
+    },
+    wc3 = {
+        enabled = true,
+        dir = "/home/lumorsunil/wc3/my-editor/nvim",
+        name = "wc3-nvim",
+        opts = {},
+        event = "User InitAllDone",
+        config = function()
+            require("my_editor").setup()
+        end
+    },
+    c3 = {
+        event = "User InitAllDone",
+        "wstucco/c3.nvim",
+        config = function()
+            require("c3").setup()
+        end
+    },
+    nvlime = {
+        event = "User InitAllDone",
+        "monkoose/nvlime",
+        dependencies = {
+            "monkoose/parsley",
+        },
+        config = function()
+            vim.g.nvlime_config = { implementation = "sbcl.exe" }
+        end
     },
 }
 

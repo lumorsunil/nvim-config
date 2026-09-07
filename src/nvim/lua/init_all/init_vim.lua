@@ -77,7 +77,8 @@ return {
             extension = {
                 mylang = "mylang",
                 newb = "newb",
-                ohm = "ohm"
+                ohm = "ohm",
+                rn = "runic",
             }
         })
 
