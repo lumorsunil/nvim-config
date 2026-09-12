@@ -4,8 +4,6 @@ return {
     if not ok then
       print("error loading init_all.utils: " .. utils)
       return
-    end
-    local try_setup = utils.try_setup
 
     -- @init_all
     try_setup(require("init_all.version_check"))
@@ -30,6 +28,7 @@ return {
       callback = function()
         vim.fn.timer_start(100, function()
           vim.cmd([[doautocmd User InitAllDone]])
+          pcall(vim.cmd, "source session.vim")
         end)
       end,
     })

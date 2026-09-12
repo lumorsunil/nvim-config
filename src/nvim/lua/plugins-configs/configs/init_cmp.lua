@@ -68,6 +68,12 @@ return function()
         }),
     })
 
+    cmp.setup.filetype({ 'lisp' }, {
+        sources = {
+            { name = 'nvlime' }
+        }
+    })
+
     -- Colors
 
     vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecated', { bg = 'NONE', strikethrough = true, fg = '#808080' })

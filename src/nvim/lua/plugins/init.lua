@@ -482,6 +482,33 @@ local lazy_specs = {
     "folke/persistence.nvim",
     event = "User InitAllDone",
   },
+  wc3 = {
+    enabled = true,
+    dir = "/home/lumorsunil/wc3/my-editor/nvim",
+    name = "wc3-nvim",
+    opts = {},
+    event = "User InitAllDone",
+    config = function()
+      require("my_editor").setup()
+    end,
+  },
+  c3 = {
+    event = "User InitAllDone",
+    "wstucco/c3.nvim",
+    config = function()
+      require("c3").setup()
+    end,
+  },
+  nvlime = {
+    event = "User InitAllDone",
+    "monkoose/nvlime",
+    dependencies = {
+      "monkoose/parsley",
+    },
+    config = function()
+      vim.g.nvlime_config = { implementation = "sbcl.exe" }
+    end,
+  },
 }
 
 local plugins = {}

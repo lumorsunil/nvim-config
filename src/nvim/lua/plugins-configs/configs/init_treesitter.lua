@@ -1,32 +1,9 @@
 return function()
   local keybinds = require("hook.keybind").hooks
-  local textobjectsmaps = keybinds.treesitter_textobjects()
-
+  -- table.insert(vim.g.markdown_fenced_languages or {}, "runic")
+  -- table.insert(vim.g.markdown_fenced_languages or {}, "zig")
+  vim.treesitter.language.register("c3", { "c3" })
   vim.treesitter.language.register("nix", "devenv-nix")
-  vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-    pattern = "devenv.nix",
-    callback = function(ev)
-      vim.treesitter.start(ev.buf, "nix")
-    end,
-  })
-  vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
-    pattern = { "*.zig" },
-    callback = function(ev)
-      vim.treesitter.start(ev.buf, "zig")
-    end,
-  })
-
-  -- apparently not needed in nvim 0.12
-  -- require("nvim-treesitter.config").setup({
-  --   modules = {},
-  --   ensure_installed = { "http", "json" },
-  --   sync_install = false,
-  --   ignore_install = {},
-  --   auto_install = true,
-  --   highlight = {
-  --     enabled = true,
-  --   },
-  -- })
 
   require("nvim-treesitter-textobjects").setup({
     select = {
@@ -75,28 +52,12 @@ return function()
     },
   })
 
-  --require 'treesitter-context'.setup {
-  --    enable = true,      -- Enable this plugin (Can be enabled/disabled later via commands)
-  --    max_lines = 0,      -- How many lines the window should span. Values <= 0 mean no limit.
-  --    min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
-  --    line_numbers = true,
-  --    multiline_threshold = 20, -- Maximum number of lines to show for a single context
-  --    trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-  --    mode = 'cursor',    -- Line used to calculate context. Choices: 'cursor', 'topline'
-  --    -- Separator between context and content. Should be a single character string, like '-'.
-  --    -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
-  --    separator = nil,
-  --    zindex = 20, -- The Z-index of the context window
-  --    on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
-  --}
   keybinds.treesitter()
   keybinds.treesitter_textobjects()
-  -- vim.api.nvim_create_augroup("TreesitterContext", {})
-  -- vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-  --     pattern = { "*" },
-  --     callback = function()
-  --         vim.cmd [[TSEnable highlight]]
-  --         --vim.cmd [[TSContextEnable]]
-  --     end
-  -- })
+  vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+    pattern = { "*" },
+    callback = function()
+      vim.treesitter.start()
+    end,
+  })
 end

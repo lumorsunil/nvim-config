@@ -67,6 +67,7 @@ return {
         ]],
       {}
     )
+
     vim.api.nvim_create_autocmd("BufWritePre", {
       group = "Formatting",
       pattern = "*.go",
@@ -82,31 +83,21 @@ return {
             end
           end
         end
-        vim.lsp.buf.format({ async = false })
       end,
     })
-    -- vim.api.nvim_create_autocmd("BufWritePre", {
-    --   group = "Formatting",
-    --   pattern = { "*.zig", "*.zon" },
-    --   callback = function()
-    --     local clients = vim.lsp.get_clients({ bufnr = 0 })
-    --     local client = clients[1]
-    --     local encoding = client and client.offset_encoding or "utf-8"
-    --     local params = vim.lsp.util.make_range_params(0, encoding)
-    --
-    --     params.context = { only = { "source.organizeImports" } }
-    --     vim.lsp.buf.code_action({
-    --       context = params.context,
-    --       apply = true,
-    --     })
-    --
-    --     params.context = { only = { "source.fixAll" } }
-    --     vim.lsp.buf.code_action({
-    --       context = params.context,
-    --       apply = true,
-    --     })
-    --   end,
-    -- })
+
+    vim.filetype.add({
+      extension = {
+        mylang = "mylang",
+        newb = "newb",
+        ohm = "ohm",
+        rn = "runic",
+      },
+    })
+
+    vim.opt.tabline = " "
+
+    vim.lsp.buf.format({ async = false })
 
     vim.filetype.add({
       extension = {
