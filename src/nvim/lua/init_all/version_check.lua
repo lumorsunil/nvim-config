@@ -1,6 +1,6 @@
 return {
     setup = function()
-        local range = "^0.10.0"
+        local range = "^0.12.5"
 
         local r = vim.version.range(range)
         local nvimVersion = vim.fn.matchstr(vim.fn.execute('version'), 'NVIM v\\zs[^\\n]*')
