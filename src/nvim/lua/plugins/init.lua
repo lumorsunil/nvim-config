@@ -481,9 +481,12 @@ local lazy_specs = {
     enabled = true,
     "folke/persistence.nvim",
     event = "User InitAllDone",
+    config = function()
+      require("persistence").setup()
+    end,
   },
   wc3 = {
-    enabled = true,
+    enabled = false,
     dir = "/home/lumorsunil/wc3/my-editor/nvim",
     name = "wc3-nvim",
     opts = {},

@@ -4,6 +4,8 @@ return {
     if not ok then
       print("error loading init_all.utils: " .. utils)
       return
+    end
+    local try_setup = utils.try_setup
 
     -- @init_all
     try_setup(require("init_all.version_check"))
